@@ -51,5 +51,22 @@ def print_board(board):
         print(white)
 
 if __name__ == "__main__":
-    add_piece(board, 0, 1)
-    print_board(board)
+    won = False
+    while not won:
+        print_board(board)
+        col = int(input("PLAYER ONE: Enter column (0-6): "))
+        if add_piece(board, col, 1):
+            if check_win(board, 1):
+                print("Player 1 wins!")
+                won = True
+        else:
+            print("ERROR: Column is full")
+        print_board(board)
+        if not won:
+            col = int(input("PLAYER TWO:Enter column (0-6): "))
+            if add_piece(board, col, 2):
+                if check_win(board, 2):
+                    print("Player 2 wins!")
+                    won = True
+            else:
+                print("ERROR: Column is full")
