@@ -1,5 +1,8 @@
 import numpy as np
 
+# Settings
+algorithm = "ab" # ab for alpha-beta, mcts for monte carlo tree search
+
 # Color codes
 yellow = '\033[93m'
 red = '\033[91m'
@@ -39,6 +42,7 @@ def check_win(board, team):
                 return True
     return False
 
+# Print current status of the board
 def print_board(board):
     for row in board:
         for cell in row:
@@ -50,23 +54,40 @@ def print_board(board):
                 print(red + '■', end=' ')
         print(white)
 
+def human_move(board):
+    good_move = False
+    while not good_move:
+        col = int(input("Human: Enter column (0-6): "))
+        if add_piece(board, col, 1):
+            good_move = True
+        else:
+            print("ERROR: Column is full")
+
+def ai_move(board):
+    if algorithm == "ab":
+        # Call alpha-beta pruning function here
+        pass
+    elif algorithm == "mcts":
+        # Call monte carlo tree search function here
+        pass
+
+# Alpha-Beta Pruning Algorithm
+
+
+
+
 if __name__ == "__main__":
     won = False
     while not won:
         print_board(board)
-        col = int(input("PLAYER ONE: Enter column (0-6): "))
-        if add_piece(board, col, 1):
-            if check_win(board, 1):
-                print("Player 1 wins!")
-                won = True
-        else:
-            print("ERROR: Column is full")
-        print_board(board)
-        if not won:
-            col = int(input("PLAYER TWO:Enter column (0-6): "))
-            if add_piece(board, col, 2):
-                if check_win(board, 2):
-                    print("Player 2 wins!")
-                    won = True
-            else:
-                print("ERROR: Column is full")
+        human_move(board)
+        if check_win(board, 1):
+            print_board(board)
+            print("Human wins!")
+            won = True
+            break
+        ai_move(board)
+        if check_win(board, 2):
+            print_board(board)
+            print("AI wins!")
+            won = True
