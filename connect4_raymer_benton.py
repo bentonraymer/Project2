@@ -59,11 +59,18 @@ def print_board(board):
 def human_move(board):
     good_move = False
     while not good_move:
-        col = int(input("Human: Enter column (0-6): "))
-        if add_piece(board, col, 1):
-            good_move = True
+        col = input("Human: Enter column (0-6): ")
+        if col.isdigit():
+            col = int(col)
+            if 0 <= col <= 6:
+                if add_piece(board, col, 1):
+                    good_move = True
+                else:
+                    print("ERROR: Column is full")
+            else:
+                print("ERROR: Invalid column number")
         else:
-            print("ERROR: Column is full")
+            print("ERROR: Please enter a valid number")
 
 # Function for an AI move
 def ai_move(board):
@@ -179,7 +186,6 @@ def evaluate_board(board):
             window = [board[row+i][col+i] for i in range(4)]
             score += score_window(np.array(window), 2)
     return score
-
 
 if __name__ == "__main__":
     won = False
